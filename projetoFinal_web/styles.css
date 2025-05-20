@@ -1,0 +1,332 @@
+/* Reset e configurações básicas */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f9f9f9;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px 0;
+}
+
+/* Cabeçalho */
+header {
+  background-color: #1fab55;
+  padding: 20px 0;
+  overflow: hidden; /* impede que a logo aumente a altura do header */
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  height: 120px; /* ou outro valor maior que 80px */
+  width: auto;
+  object-fit: contain;
+  margin-top: -20px; /* ajusta o posicionamento vertical */
+  margin-bottom: -20px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.btn-login {
+  background-color: #fff;
+  color: #4CAF50;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+/* Seção Hero */
+.hero {
+  background-color: #e0f7fa;
+  padding: 60px 0;
+}
+
+.hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.hero-text {
+  flex: 1;
+  padding: 20px;
+}
+
+.hero-text h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.hero-text p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.hero-text .btn {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.hero-image {
+  flex: 1;
+  padding: 20px;
+}
+
+.hero-image img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* Seções */
+section {
+  padding: 60px 0;
+}
+
+.about,
+.services,
+.testimonials,
+.faq,
+.contact {
+  background-color: #fff;
+  margin-bottom: 20px;
+}
+
+.about-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.about-text {
+  flex: 1;
+  padding: 20px;
+}
+
+.about-image {
+  flex: 1;
+  padding: 20px;
+}
+
+.about-image img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.services ul {
+  list-style: disc;
+  padding-left: 20px;
+}
+
+.services ul li {
+  margin-bottom: 10px;
+}
+
+.testimonials .testimonial {
+  background-color: #f1f1f1;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.testimonials .testimonial p {
+  font-style: italic;
+}
+
+.testimonials .testimonial span {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.faq .faq-item {
+  margin-bottom: 20px;
+}
+
+.faq .faq-item h3 {
+  margin-bottom: 10px;
+  color: #4CAF50;
+}
+
+.contact .btn {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+/* Rodapé */
+footer {
+  background-color: #4CAF50;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* Botão flutuante do WhatsApp */
+.whatsapp-float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 40px;
+  right: 40px;
+  background-color: #25d366;
+  color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 30px;
+  box-shadow: 2px 2px 3px #999;
+  z-index: 100;
+}
+
+.whatsapp-float img {
+  width: 35px;
+  margin-top: 12px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .hero-content,
+  .about-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Estilos do Carrossel de Depoimentos */
+.testimonials {
+  position: relative;
+  overflow: hidden;
+}
+
+.carrossel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.carrossel {
+  display: flex;
+  transition: transform 0.5s ease;
+  width: 100%;
+  overflow: hidden;
+}
+
+.testimonial {
+  flex: 0 0 calc(100% / 3);
+  padding: 20px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  opacity: 0;
+  position: absolute;
+  transform: translateX(100%);
+}
+
+.testimonial.active {
+  opacity: 1;
+  position: relative;
+  transform: translateX(0);
+}
+
+.testimonial:nth-child(1).active ~ .testimonial:nth-child(2),
+.testimonial:nth-child(2).active {
+  opacity: 1;
+  transform: translateX(100%);
+}
+
+.testimonial:nth-child(2).active ~ .testimonial:nth-child(3),
+.testimonial:nth-child(3).active {
+  opacity: 1;
+  transform: translateX(200%);
+}
+
+.carrossel-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 50%;
+  margin: 0 10px;
+  z-index: 10;
+}
+
+.carrossel-btn:hover {
+  background-color: #3e8e41;
+}
+
+.carrossel-indicadores {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.carrossel-indicador {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #bbb;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.carrossel-indicador.active {
+  background-color: #4CAF50;
+}
+
+/* Responsividade do Carrossel */
+@media (max-width: 768px) {
+  .testimonial {
+    flex: 0 0 100%;
+  }
+  
+  .testimonial:nth-child(1).active ~ .testimonial:nth-child(2),
+  .testimonial:nth-child(2).active {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
