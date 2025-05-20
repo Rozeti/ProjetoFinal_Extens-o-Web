@@ -44,7 +44,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
   });
   
-// Carrossel de Depoimentos - Versão Final
+// Carrossel de Depoimentos - Versão com Loop Contínuo Suave
 document.addEventListener('DOMContentLoaded', function() {
   const carrossel = document.querySelector('.carrossel');
   const carrosselWrapper = document.querySelector('.carrossel-wrapper');
@@ -57,27 +57,41 @@ document.addEventListener('DOMContentLoaded', function() {
   let visibleItems = 3;
   let isAnimating = false;
   let autoScrollInterval;
-  const scrollSpeed = 300; // ms por depoimento no auto-scroll
+  const scrollSpeed = 300;
+  let clonesAdded = false;
 
   // Configuração inicial
   function setupCarrossel() {
-    // Definir número de itens visíveis baseado no tamanho da tela
     visibleItems = window.innerWidth <= 992 ? (window.innerWidth <= 768 ? 1 : 2) : 3;
     
-    // Ajustar largura do carrossel para acomodar todos os itens
     const itemWidth = 100 / visibleItems;
     testimonials.forEach(item => {
       item.style.flex = `0 0 ${itemWidth}%`;
     });
     
-    // Criar indicadores
+    // Adicionar clones apenas uma vez
+    if (!clonesAdded) {
+      addClones();
+      clonesAdded = true;
+    }
+    
     createIndicators();
-    
-    // Atualizar posição inicial
     updateCarrossel();
-    
-    // Iniciar auto-scroll
     startAutoScroll();
+  }
+
+  // Adicionar clones para efeito contínuo
+  function addClones() {
+    const items = document.querySelectorAll('.testimonial');
+    const itemsArray = Array.from(items);
+    
+    // Clonar itens suficientes para preencher a tela
+    const clonesNeeded = Math.ceil(visibleItems * 2);
+    for (let i = 0; i < clonesNeeded; i++) {
+      const clone = itemsArray[i % itemsArray.length].cloneNode(true);
+      clone.classList.add('clone');
+      carrossel.appendChild(clone);
+    }
   }
 
   // Atualizar posição do carrossel
@@ -92,8 +106,8 @@ document.addEventListener('DOMContentLoaded', function() {
     carrossel.style.transform = `translateX(${translateX}%)`;
     
     // Atualizar estado dos botões
-    prevBtn.disabled = currentIndex === 0;
-    nextBtn.disabled = currentIndex >= testimonials.length - visibleItems;
+    prevBtn.disabled = false;
+    nextBtn.disabled = false;
     
     // Atualizar indicadores
     updateIndicators();
@@ -101,13 +115,46 @@ document.addEventListener('DOMContentLoaded', function() {
     // Resetar animação
     setTimeout(() => {
       isAnimating = false;
+      checkForLoop();
     }, 500);
+  }
+
+  // Verificar se precisa ajustar para loop contínuo
+  function checkForLoop() {
+    const totalOriginalItems = testimonials.length;
+    const totalItems = totalOriginalItems + Math.ceil(visibleItems * 2); // Itens originais + clones
+    
+    // Se estiver perto do final dos clones, volta para os itens originais
+    if (currentIndex >= totalOriginalItems) {
+      currentIndex = currentIndex % totalOriginalItems;
+      carrossel.style.transition = 'none';
+      updateCarrosselPosition();
+      setTimeout(() => {
+        carrossel.style.transition = 'transform 0.5s ease-in-out';
+      }, 50);
+    }
+    // Se estiver antes dos itens originais, vai para o final dos clones
+    else if (currentIndex < 0) {
+      currentIndex = totalOriginalItems + Math.floor(visibleItems * 1.5);
+      carrossel.style.transition = 'none';
+      updateCarrosselPosition();
+      setTimeout(() => {
+        carrossel.style.transition = 'transform 0.5s ease-in-out';
+      }, 50);
+    }
+  }
+
+  // Atualizar posição sem animação
+  function updateCarrosselPosition() {
+    const itemWidth = 100 / visibleItems;
+    const translateX = -currentIndex * itemWidth;
+    carrossel.style.transform = `translateX(${translateX}%)`;
   }
 
   // Criar indicadores
   function createIndicators() {
     indicadoresContainer.innerHTML = '';
-    const totalPages = Math.max(testimonials.length - visibleItems + 1, 1);
+    const totalPages = Math.ceil(testimonials.length / visibleItems);
     
     for (let i = 0; i < totalPages; i++) {
       const indicador = document.createElement('div');
@@ -121,7 +168,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // Atualizar indicadores ativos
   function updateIndicators() {
     const indicators = document.querySelectorAll('.carrossel-indicador');
-    const activeIndicator = Math.min(currentIndex, indicators.length - 1);
+    const realIndex = currentIndex % testimonials.length;
+    const activeIndicator = Math.floor(realIndex / visibleItems);
     
     indicators.forEach((ind, idx) => {
       ind.classList.toggle('active', idx === activeIndicator);
@@ -130,21 +178,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Navegar para índice específico
   function goToIndex(index) {
-    if (index < 0 || index > testimonials.length - visibleItems || isAnimating) return;
-    currentIndex = index;
+    currentIndex = index * visibleItems;
     updateCarrossel();
   }
 
   // Event listeners para navegação
   prevBtn.addEventListener('click', () => {
-    if (currentIndex > 0) {
+    if (!isAnimating) {
       currentIndex--;
       updateCarrossel();
     }
   });
 
   nextBtn.addEventListener('click', () => {
-    if (currentIndex < testimonials.length - visibleItems) {
+    if (!isAnimating) {
       currentIndex++;
       updateCarrossel();
     }
@@ -153,12 +200,10 @@ document.addEventListener('DOMContentLoaded', function() {
   // Auto-scroll
   function startAutoScroll() {
     autoScrollInterval = setInterval(() => {
-      if (currentIndex < testimonials.length - visibleItems) {
+      if (!isAnimating) {
         currentIndex++;
-      } else {
-        currentIndex = 0;
+        updateCarrossel();
       }
-      updateCarrossel();
     }, 5000);
   }
 
@@ -176,9 +221,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const prevVisibleItems = visibleItems;
     setupCarrossel();
     
-    // Ajustar currentIndex se necessário
     if (visibleItems !== prevVisibleItems) {
-      currentIndex = Math.min(currentIndex, testimonials.length - visibleItems);
+      currentIndex = Math.min(currentIndex, testimonials.length - 1);
       updateCarrossel();
     }
   });
