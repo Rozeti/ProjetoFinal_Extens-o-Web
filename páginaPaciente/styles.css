@@ -1,0 +1,415 @@
+/* Reset e configurações básicas */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px 0;
+}
+
+main {
+  flex: 1;
+}
+
+/* Cabeçalho */
+header {
+  background-color: #1fab55;
+  padding: 20px 0;
+  overflow: hidden;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  height: 120px;
+  width: auto;
+  object-fit: contain;
+  margin-top: -20px;
+  margin-bottom: -20px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  position: relative;
+  padding: 10px 0;
+  transition: all 0.3s ease;
+}
+
+/* Estilo para o link ATIVO (selecionado) */
+.nav-links li a.active {
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Traço inferior SOMENTE para o link ativo */
+.nav-links li a.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #fff;
+  border-radius: 3px 3px 0 0;
+  animation: underlinePulse 1.5s infinite;
+}
+
+@keyframes underlinePulse {
+  0% { opacity: 0.8; transform: scaleX(0.95); }
+  50% { opacity: 1; transform: scaleX(1); }
+  100% { opacity: 0.8; transform: scaleX(0.95); }
+}
+
+/* Efeito hover para feedback visual */
+.nav-links li a:hover {
+  opacity: 0.9;
+}
+
+.nav-links li a.active {
+  color: #fff;
+  font-weight: bold;
+  position: relative;
+}
+
+/* Traço inferior para o link ativo */
+.nav-links li a.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #fff;
+  border-radius: 3px 3px 0 0;
+  animation: pulseUnderline 1.5s infinite;
+}
+
+@keyframes pulseUnderline {
+  0% { opacity: 0.8; }
+  50% { opacity: 1; }
+  100% { opacity: 0.8; }
+}
+
+.btn-login {
+  background-color: #fff;
+  color: #4CAF50;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+/* Seção Hero */
+.hero {
+  background-color: #e0f7fa;
+  padding: 60px 0;
+}
+
+.hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.hero-text {
+  flex: 1;
+  padding: 20px;
+}
+
+.hero-text h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.hero-text p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.hero-text .btn {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.hero-image {
+  flex: 1;
+  padding: 20px;
+}
+
+.hero-image img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* Seções */
+section {
+  padding: 60px 0;
+}
+
+.about,
+.services,
+.contact {
+  background-color: #fff;
+  margin-bottom: 20px;
+}
+
+.about-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.about-text {
+  flex: 1;
+  padding: 20px;
+}
+
+.about-image {
+  flex: 1;
+  padding: 20px;
+}
+
+.about-image img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.services ul {
+  list-style: disc;
+  padding-left: 20px;
+}
+
+.services ul li {
+  margin-bottom: 10px;
+}
+
+.contact .btn {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+/* Rodapé */
+footer {
+  background-color: #181b18;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* Botão flutuante do WhatsApp */
+.whatsapp-float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 40px;
+  right: 40px;
+  background-color: #25d366;
+  color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 30px;
+  box-shadow: 2px 2px 3px #999;
+  z-index: 100;
+}
+
+.whatsapp-float img {
+  width: 35px;
+  margin-top: 12px;
+}
+
+/* Estilos para a seção Minha Conta - VERSÃO CORRIGIDA */
+.account-section {
+  background-color: #e0f7fa;
+  min-height: calc(100vh - 160px); /* Ajuste para considerar header e footer */
+  padding: 40px 0;
+  display: flex;
+  align-items: center;
+}
+
+.account-wrapper {
+  width: 100%;
+  margin-top: 80px; /* Espaçamento para o header */
+  margin-bottom: 40px; /* Espaçamento para o footer */
+}
+
+.account-container {
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.account-container h2 {
+  color: #4CAF50;
+  margin-bottom: 10px;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.account-container p {
+  color: #666;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.account-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.account-form .form-group {
+  margin-bottom: 20px;
+}
+
+.account-form .form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+}
+
+.account-form .form-group input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.account-form .form-group input:focus {
+  border-color: #4CAF50;
+  outline: none;
+}
+
+.account-form .form-group input[readonly] {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.btn-login-submit {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 5px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+.btn-login-submit:hover {
+  background-color: #3e8e41;
+}
+
+.account-actions {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+  text-align: center;
+}
+
+.btn-delete-account {
+  background: none;
+  border: none;
+  color: #e53935;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 5px;
+  transition: color 0.3s;
+}
+
+.btn-delete-account:hover {
+  color: #c62828;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .account-section {
+    padding: 20px;
+  }
+  
+  .account-wrapper {
+    margin-top: 60px; /* Menos espaço em mobile */
+  }
+  
+  .account-container {
+    padding: 30px 20px;
+  }
+  
+  .account-container h2 {
+    font-size: 1.8rem;
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .hero-content,
+  .about-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.btn[style*="background-color: #e53935;"] {
+  background-color: #e53935;
+  color: #fff;
+}
